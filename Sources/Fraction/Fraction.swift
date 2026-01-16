@@ -177,6 +177,16 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         return reducing
     }
 
+    /// Calculates the greatest common divisor of two `Fraction`s.
+    /// GCD is product of both fraction's denominator.
+    /// - Parameters:
+    ///   - lhs: A `Fraction`.
+    ///   - rhs: Another `Fraction`.
+    /// - Returns: Greatest common divisor.
+    public mutating func greatestCommonDivisor(lhs: Fraction, rhs: Fraction) -> Int {
+        return Int(lhs._denominator * rhs._denominator)
+    }
+
     /// The summation of two `Fraction`s.
     /// To add two fractions:
     /// `a/b + c/d = ((a*d) + (b*c)) / (b*d)`
