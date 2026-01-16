@@ -75,8 +75,7 @@ public struct Fraction {
     }
 
     /// Creates a new `Fraction` object.
-    /// - Parameters:
-    ///   - double: A `Double` value to be presented as a `Fraction`.
+    /// - Parameter double: A `Double` value to be presented as a `Fraction`.
     public init(double: Double) {
         let wholePart = Int(modf(double).0)
         let fractionalPart = modf(double).1
@@ -113,22 +112,23 @@ extension Fraction {
 // MARK: - Calculations
 extension Fraction: AdditiveArithmetic, SignedNumeric {
     
-    /// The result of calculating the absolut value of a fraction is itself a fraction.
+    /// The result of calculating the absolut value of a `Fraction` is itself a `Fraction`.
     public typealias Magnitude = Fraction
     
-    /// Any integer can be represented as a fraction by diving through 1.
+    /// Any integer can be represented as a `Fraction` by diving through 1.
     public typealias IntegerLiteralType = Int
 
-    /// Representing a Fraction with numerator of 0. Neutral element of addition.
+    /// Representing a `Fraction` with numerator of 0. Neutral element of addition.
     public static var zero: Fraction { Fraction(num: 0, den: 1) }
-    /// Representing a Fraction with numerator and denominator of 1. Neutral element of multiplication.
+
+    /// Representing a `Fraction` with numerator and denominator of 1. Neutral element of multiplication.
     public static var one: Fraction { Fraction(num: 1, den: 1) }
     
-    /// The absolut value of a fraction
+    /// The absolut value of a `Fraction`.
     public var magnitude: Magnitude { Fraction(num: Int(numerator.magnitude), den: denominator) }
     
-    /// The reciprocal value of the given fraction
-    /// `signum(numerator/denominator) -> signum(denominator/numerator)`
+    /// The reciprocal value of the given `Fraction`:
+    /// `signum(numerator/denominator) -> signum(denominator/numerator)`.
     public var reciprocal: Fraction {
         var reciprocalNumerator = Int(self._denominator)
         reciprocalNumerator *= self._numerator < 0 ? -1 : 1
@@ -136,13 +136,13 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         return Fraction(num: reciprocalNumerator, den: self._numerator.magnitude)
     }
     
-    /// Creates a new fraciton from an integer literal (by dividing through 1).
+    /// Creates a new `Fraction` from an integer literal (by dividing through 1).
     /// - Parameter value: An integer literal (like any whole number written).
     public init(integerLiteral value: Self.IntegerLiteralType) {
         self = Fraction(num: value, den: 1)
     }
     
-    /// Creates a new fraction from any `BinaryInteger` type, by dividing the value through 1.
+    /// Creates a new `Fraction` from any `BinaryInteger` type, by dividing the value through 1.
     /// - Parameter source: Any value of `BinaryInteger` type.
     public init?<T>(exactly source: T) where T : BinaryInteger {
         let numerator = Int(source)
@@ -169,20 +169,20 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         _denominator /= upper
     }
     
-    /// Creates a fraction reduced by the lowest common denominator.
-    /// - Returns: A new fraction reduced by the lowest common denominator.
+    /// Creates a `Fraction` reduced by the lowest common denominator.
+    /// - Returns: A new `Fraction` reduced by the lowest common denominator.
     public func reduced() -> Fraction {
         var reducing = self
         reducing.reduce()
         return reducing
     }
 
-    /// The summation of two fractions.
+    /// The summation of two `Fraction`s.
     /// To add two fractions:
     /// `a/b + c/d = ((a*d) + (b*c)) / (b*d)`
     /// - Parameters:
-    ///   - lhs: A fraction summand.
-    ///   - rhs: Another fraction summand.
+    ///   - lhs: A `Fraction` summand.
+    ///   - rhs: Another `Fraction` summand.
     /// - Returns: A fraction representing the sum.
     public static func + (lhs: Fraction, rhs: Fraction) -> Fraction {
 
