@@ -314,47 +314,47 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
     }
 }
 
-//extension Fraction: Equatable {
-//    /// Returns a Boolean value indicating whether two fractions are equal.
-//    /// Reduces both values to its lowest common devisor before comparing,
-//    /// therefore fraction equality does not mean both values have the same numerator and denominator:
-//    /// `3/4 == 6/8`
-//    ///
-//    /// Equality is the inverse of inequality. For any values `a` and `b`,
-//    /// `a == b` implies that `a != b` is `false`.
-//    ///
-//    /// - Parameters:
-//    ///   - lhs: A fraction to compare.
-//    ///   - rhs: Another fraction to compare.
-//    /// - Returns: Boolean indicating both fractions are equal.
-//    public static func == (lhs: Fraction, rhs: Fraction) -> Bool {
-//        var first = lhs
-//        var second = rhs
-//        return first.reduce() == second.reduce()
-//    }
-//
-//    public static func != (lhs: Fraction, rhs: Fraction) -> Bool {
-//        return !(lhs == rhs)
-//    }
-//
-//    /// Two fractions are identically, if both their numerator and denominators are equal.
-//    /// - Parameters:
-//    ///   - lhs: A fraction to compare.
-//    ///   - rhs: Another fraction to compare.
-//    /// - Returns: Boolean indicating both fractions are identical.
-//    public static func === (lhs: Fraction, rhs: Fraction) -> Bool {
-//        return lhs._numerator == rhs._numerator && lhs._denominator == rhs._denominator
-//    }
-//    
-//    /// Two fractions are not identically, if either their numerators or denominators are unequal.
-//    /// - Parameters:
-//    ///   - lhs: A fraction to compare.
-//    ///   - rhs: Another fraction to compare.
-//    /// - Returns: Boolean indicating both fractions are unidentical.
-//    public static func !== (lhs: Fraction, rhs: Fraction) -> Bool {
-//        return !(lhs === rhs)
-//    }
-//}
+extension Fraction: Equatable {
+    /// Returns a Boolean value indicating whether two `Fraction`s are equal.
+    /// Reduces both values to its lowest common devisor before comparing,
+    /// therefore fraction equality does not mean both values have the same numerator and denominator:
+    /// `3/4 == 6/8`
+    ///
+    /// Equality is the inverse of inequality. For any values `a` and `b`,
+    /// `a == b` implies that `a != b` is `false`.
+    ///
+    /// - Parameters:
+    ///   - lhs: A `Fraction` to compare.
+    ///   - rhs: Another `Fraction` to compare.
+    /// - Returns: Boolean indicating both fractions are equal.
+    public static func == (lhs: Fraction, rhs: Fraction) -> Bool {
+        var first = lhs
+        var second = rhs
+        return first.reduce() == second.reduce()
+    }
+
+    public static func != (lhs: Fraction, rhs: Fraction) -> Bool {
+        return !(lhs == rhs)
+    }
+
+    /// Two `Fraction`s are identically, if both their numerator and denominators are equal.
+    /// - Parameters:
+    ///   - lhs: A `Fraction` to compare.
+    ///   - rhs: Another `Fraction` to compare.
+    /// - Returns: Boolean indicating both fractions are identical.
+    public static func === (lhs: Fraction, rhs: Fraction) -> Bool {
+        return lhs._numerator == rhs._numerator && lhs._denominator == rhs._denominator
+    }
+    
+    /// Two `Fractions` are not identically, if either their numerators or denominators are unequal.
+    /// - Parameters:
+    ///   - lhs: A `Fraction` to compare.
+    ///   - rhs: Another `Fraction` to compare.
+    /// - Returns: Boolean indicating both fractions are unidentical.
+    public static func !== (lhs: Fraction, rhs: Fraction) -> Bool {
+        return !(lhs === rhs)
+    }
+}
 
 extension Fraction: Comparable {
     /// Returns a Boolean value indicating whether the value of the first
