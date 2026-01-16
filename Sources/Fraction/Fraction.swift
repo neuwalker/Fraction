@@ -7,33 +7,33 @@
 
 import Foundation
 
-//===----------------------------------------------------------------------===//
-// Fraction
-//===----------------------------------------------------------------------===//
-/// Struct for fraction with numerator / denominator.
-/// Use for symbolic calculation.
-/// Reduce to smalles common denominator.
-/// Gives double from faction.
-/// Mathematical operations.
+///
+/// Fraction
+///
+/// Struct representing a `Fraction` with numerator / denominator. Use for symbolic calculation. Available features: Reduce to smalles common denominator, convert to or from `Double`, ect.
 public struct Fraction {
 
-    enum Error: Swift.Error {
+    /// Error to be thrown if Fraction will be initialized with a denominator of 0. Devision by Zero is not allowed.
+    public enum Error: Swift.Error {
         case devisionByZero
     }
 
     fileprivate var _numerator: Int
     fileprivate var _denominator: UInt
 
-    /// Public getter
+    /// Getter for numerator.
+    /// - Return: The numerator as an `Int`.
     public var numerator: Int {
         return _numerator
     }
 
+    /// Getter for denominator.
+    /// - Return: The denominator as an `UInt`.
     public var denominator: UInt {
         return _denominator
     }
 
-    /// The nearest double value represented by this fraction.
+    /// Getter for the neatest `Double` value represented by the `Fraction`.
     public var doubleValue: Double {
         return convertToDouble()
     }
@@ -43,10 +43,11 @@ public struct Fraction {
         self._denominator = den
     }
 
-    /// Creates a new fraction object.
+    /// Creates a new `Fraction` object.
     /// - Parameters:
     ///  - numerator: The counting part of the fraction. Value above the diving line.
     ///  - denominator: The declaring part of the fraction. Value below the diving line.
+    /// - Throws: an ``Fraction/Fraction/Error/devisionByZero`` error if denominator is 0. ``Fraction/Fraction/Error/devisionByZero``
     public init(numerator: Int, denominator: UInt) throws {
         guard denominator != 0 else {
             throw Error.devisionByZero
@@ -55,10 +56,11 @@ public struct Fraction {
         self.init(num: numerator, den: denominator)
     }
     
-    /// Creates a new fraction object.
+    /// Creates a new `Fraction` object.
     /// - Parameters:
     ///   - numerator: The counting part of the fraction. Value above the diving line.
     ///   - denominator: The declaring part of the fraction .Value below the diving line. If this value is negative, the magnitude will be used and numerator witll be multiplied by -1.
+    /// - Throws: an ``Fraction/Fraction/Error/devisionByZero`` error if denominator is 0.
     public init(numerator: Int, denominator: Int) throws {
         guard denominator != 0 else {
             throw Error.devisionByZero
@@ -72,6 +74,10 @@ public struct Fraction {
         self.init(num: numerator, den: denominator.magnitude)
     }
 
+    /// Creates a new `Fraction` object.
+    /// - Parameters:
+    ///   - double: A `Double` value to be presented as a `Fraction`.
+    /// - Throws: an ``Fraction/Fraction/Error/devisionByZero`` error if denominator is 0.
     public init(double: Double) throws {
         let fractionalPart = modf(double).1
         let wholePart = Int(modf(double).0)
