@@ -345,31 +345,31 @@ extension Fraction {
 //    }
 //}
 
-//extension Fraction: Comparable {
-//    /// Returns a Boolean value indicating whether the value of the first
-//    /// fraction is less than that of the second fraction.
-//    ///
-//    /// This function is the only requirement of the `Comparable` protocol. The
-//    /// remainder of the relational operator functions are implemented by the
-//    /// standard library for any type that conforms to `Comparable`.
-//    ///
-//    /// - Parameters:
-//    ///   - lhs: A fraction to compare.
-//    ///   - rhs: Another fraction to compare.
-//    /// - Returns: Boolean indicating `lhs` fraction is less than `rhs` fraction.
-//    public static func < (lhs: Fraction, rhs: Fraction) -> Bool {
-//        
-//        // to compare to fractions, bring both to same denominator
-//        // multiply first fraction with second denominator
-//        // multiply second fraciton with first denominator
-//        // compare numerators
-//        
-//        let ownNumerator = lhs._numerator * rhs._denominator
-//        let foreignNumerator = rhs._numerator * lhs._denominator
-//        
-//        return ownNumerator < foreignNumerator
-//    }
-//}
+extension Fraction: Comparable {
+    /// Returns a Boolean value indicating whether the value of the first
+    /// fraction is less than that of the second fraction.
+    ///
+    /// This function is the only requirement of the `Comparable` protocol. The
+    /// remainder of the relational operator functions are implemented by the
+    /// standard library for any type that conforms to `Comparable`.
+    ///
+    /// - Parameters:
+    ///   - lhs: A fraction to compare.
+    ///   - rhs: Another fraction to compare.
+    /// - Returns: Boolean indicating `lhs` fraction is less than `rhs` fraction.
+    public static func < (lhs: Fraction, rhs: Fraction) -> Bool {
+        
+        // to compare to fractions, bring both to same denominator
+        // multiply first fraction with second denominator
+        // multiply second fraciton with first denominator
+        // compare numerators
+        
+        let ownNumerator = lhs._numerator * rhs._denominator
+        let foreignNumerator = rhs._numerator * lhs._denominator
+        
+        return ownNumerator < foreignNumerator
+    }
+}
 
 extension Fraction: Codable { }
 
