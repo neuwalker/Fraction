@@ -328,13 +328,9 @@ extension Fraction: Equatable {
     ///   - rhs: Another `Fraction` to compare.
     /// - Returns: Boolean indicating both fractions are equal.
     public static func == (lhs: Fraction, rhs: Fraction) -> Bool {
-        var first = lhs
-        var second = rhs
-        return first.reduce() == second.reduce()
-    }
-
-    public static func != (lhs: Fraction, rhs: Fraction) -> Bool {
-        return !(lhs == rhs)
+        let first = lhs.reduced()
+        let second = rhs.reduced()
+        return first._numerator == second._numerator && first._denominator == second._denominator
     }
 
     /// Two `Fraction`s are identically, if both their numerator and denominators are equal.
