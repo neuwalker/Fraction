@@ -191,7 +191,7 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         return result.reduced()
     }
     
-    /// The difference of one fractions from another.
+    /// The difference of one `Fraction` from another.
     /// To substiute a fraction from another:
     /// `a/b - c/d = ((a*d) - (b*c)) / (b*d)`
     /// - Parameters:
@@ -205,7 +205,7 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         return result.reduced()
     }
     
-    /// The product of two fractions.
+    /// The product of two `Fraction`s.
     /// To multiply two fraction:
     /// `a/b * c/d = (a*c) / (b/d)`
     /// - Parameters:
@@ -219,7 +219,7 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         return result.reduced()
     }
     
-    /// The quotient of one fraction to another.
+    /// The quotient of one `Fraction` to another.
     /// To devide a Fraction by another:
     /// `a/b / c/d = (a*d) / (b*c)`
     /// - Parameters:
@@ -232,7 +232,7 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         return result.reduced()
     }
     
-    /// Adds two fractions and stores the result in the left-hand-side fraction.
+    /// Adds two `Fraction`s and stores the result in the left-hand-side fraction.
     /// - Parameters:
     ///   - lhs: A fraction summand.
     ///   - rhs: Another fraction summand.
@@ -240,7 +240,7 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         lhs = lhs + rhs
     }
     
-    /// Subtracts the second fraction from the first and stores the difference in the left-hand-side variable.
+    /// Subtracts the second `Fraction` from the first and stores the difference in the left-hand-side variable.
     /// - Parameters:
     ///   - lhs: Minuend fraction.
     ///   - rhs: Subtrahend fraction.
@@ -248,7 +248,7 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         lhs = lhs - rhs
     }
     
-    /// Multiplies two fractions and stores the product in the left-hand-side variable.
+    /// Multiplies two `Fraction`s and stores the product in the left-hand-side variable.
     /// - Parameters:
     ///   - lhs: A fraction factor.
     ///   - rhs: Another fraction factor.
@@ -256,7 +256,7 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         lhs = lhs * rhs
     }
     
-    /// Divieds one fraction through another and stores the quotient in the left-hand-side variable.
+    /// Divieds one `Fraction` through another and stores the quotient in the left-hand-side variable.
     /// - Parameters:
     ///   - lhs: Dividend fraction.
     ///   - rhs: Devisor fraction.
@@ -268,14 +268,15 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
     public mutating func negate() {
         self = .zero - self
     }
-    
+
+    /// Negates a `Fraction`.
     public func negated() -> Fraction {
         var negating = self
         negating.negate()
         return negating
     }
 
-    /// Multiply a fraction with a whole number.
+    /// Multiply a `Fraction` with a whole number.
     /// - Parameter number: An integer to multiply the fraction with.
     /// - Returns: A new fraction which is the `number` times of the given fraction.
     public func multiply(with number: Int) -> Fraction {
@@ -284,7 +285,7 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         return multipliedFraction
     }
     
-    /// Multiply a fraction with a floating point number.
+    /// Multiply a `Fraction` with a floating point number.
     /// - Parameter double: The floating point number to multiply the fraction with.
     /// - Returns: A new fraction which is the producht of `double` with the givern fraction.
     public func multiply(with double: Double) -> Fraction {
