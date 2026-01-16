@@ -77,10 +77,9 @@ public struct Fraction {
     /// Creates a new `Fraction` object.
     /// - Parameters:
     ///   - double: A `Double` value to be presented as a `Fraction`.
-    /// - Throws: an ``Fraction/Fraction/Error/devisionByZero`` error if denominator is 0.
-    public init(double: Double) throws {
-        let fractionalPart = modf(double).1
+    public init(double: Double) {
         let wholePart = Int(modf(double).0)
+        let fractionalPart = modf(double).1
 
         let digitsAfterDecimal: Int = {
             let string = String(double)
@@ -95,9 +94,10 @@ public struct Fraction {
             return
         }
 
-        let denominator = Int(pow(10.0, Double(digitsAfterDecimal)))
+        let denominator = UInt(pow(10.0, Double(digitsAfterDecimal)))
         let numerator = sign * (Int(fractionalPart) + abs(wholePart) * Int(denominator))
-        self.init(num: numerator, den: UInt(denominator)) //.reduced()
+        let newFraction = Fraction(num: numerator, den: denominator)
+        self = newFraction //.reduce()
     }
 }
 
