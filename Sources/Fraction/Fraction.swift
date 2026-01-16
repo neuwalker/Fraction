@@ -378,6 +378,56 @@ extension Fraction: Comparable {
     }
 }
 
+extension Fraction: Strideable {
+    /// Returns the distance from this value to the given value, expressed as a
+    /// stride.
+    ///
+    /// If this type's `Stride` type conforms to `BinaryInteger`, then for two
+    /// values `x` and `y`, and a distance `n = x.distance(to: y)`,
+    /// `x.advanced(by: n) == y`. Using this method with types that have a
+    /// noninteger `Stride` may result in an approximation.
+    ///
+    /// - Parameter other: The value to calculate the distance to.
+    /// - Returns: The distance from this value to `other`.
+    ///
+    /// - Complexity: O(1)
+    public func distance(to other: Fraction) -> Fraction {
+        return other - self
+    }
+
+    /// Returns a value that is offset the specified distance from this value.
+    ///
+    /// Use the `advanced(by:)` method in generic code to offset a value by a
+    /// specified distance. If you're working directly with numeric values, use
+    /// the addition operator (`+`) instead of this method.
+    ///
+    ///     func addOne<T: Strideable>(to x: T) -> T
+    ///         where T.Stride: ExpressibleByIntegerLiteral
+    ///     {
+    ///         return x.advanced(by: 1)
+    ///     }
+    ///
+    ///     let x = addOne(to: 5)
+    ///     // x == 6
+    ///     let y = addOne(to: 3.5)
+    ///     // y = 4.5
+    ///
+    /// If this type's `Stride` type conforms to `BinaryInteger`, then for a
+    /// value `x`, a distance `n`, and a value `y = x.advanced(by: n)`,
+    /// `x.distance(to: y) == n`. Using this method with types that have a
+    /// noninteger `Stride` may result in an approximation. If the result of
+    /// advancing by `n` is not representable as a value of this type, then a
+    /// runtime error may occur.
+    ///
+    /// - Parameter n: The distance to advance this value.
+    /// - Returns: A value that is offset from this value by `n`.
+    ///
+    /// - Complexity: O(1)
+    public func advanced(by n: Fraction) -> Fraction {
+        return self + n
+    }
+}
+
 extension Fraction: Codable { }
 
 // MARK: - Description
