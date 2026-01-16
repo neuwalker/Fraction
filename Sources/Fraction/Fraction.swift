@@ -355,16 +355,16 @@ extension Fraction: Comparable {
     /// standard library for any type that conforms to `Comparable`.
     ///
     /// - Parameters:
-    ///   - lhs: A fraction to compare.
-    ///   - rhs: Another fraction to compare.
+    ///   - lhs: A `Fraction` to compare.
+    ///   - rhs: Another `Fraction` to compare.
     /// - Returns: Boolean indicating `lhs` fraction is less than `rhs` fraction.
     public static func < (lhs: Fraction, rhs: Fraction) -> Bool {
-        
+
         // to compare to fractions, bring both to same denominator
         // multiply first fraction with second denominator
-        // multiply second fraciton with first denominator
+        // multiply second fraction with first denominator
         // compare numerators
-        
+
         let ownNumerator = lhs._numerator * rhs._denominator
         let foreignNumerator = rhs._numerator * lhs._denominator
         
