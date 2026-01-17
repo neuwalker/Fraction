@@ -259,7 +259,7 @@ extension Fraction: AdditiveArithmetic, Numeric {
         lhs = lhs * rhs
     }
     
-    /// Divieds one `Fraction` through another and stores the quotient in the left-hand-side variable.
+    /// Divides one `Fraction` through another and stores the quotient in the left-hand-side variable.
     /// - Parameters:
     ///   - lhs: Dividend fraction.
     ///   - rhs: Devisor fraction.
@@ -267,9 +267,22 @@ extension Fraction: AdditiveArithmetic, Numeric {
         lhs = lhs / rhs
     }
 
+    /// Use the power operation on a `Fraction`.
+    /// - Parameters:
+    ///   - base: The `Fraction` to be powered.
+    ///   - exponent: Any value used as the exponent.
+    /// - Returns: A new fraction, which is exponent times bigger.
     public static func ** (base: Fraction, exponent: Float) -> Fraction {
         return Fraction(num: Int(pow(Double(base.numerator), Double(exponent))),
                         den: UInt(pow(Double(base.denominator), Double(exponent))))
+    }
+
+    /// Rise a `Fraction` to it's exponents power
+    /// - Parameters:
+    ///   - base: The `Fraction` to be powered.
+    ///   - exponent: Any value used as the exponent.
+    public static func **= (lhs: inout Fraction, exponent: Float) {
+        lhs = lhs ** exponent
     }
 
     /// Multiply a `Fraction` with a whole number.
