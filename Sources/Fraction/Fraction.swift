@@ -315,6 +315,26 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
     }
 }
 
+extension Fraction: ExpressibleByIntegerLiteral {
+    /// Any `Integer` can be represented as a `Fraction` by diving through 1.
+    public typealias IntegerLiteralType = Int
+
+    /// Creates a new `Fraction` from an integer literal (by dividing through 1).
+    /// - Parameter value: An integer literal (like any whole number written).
+    public init(integerLiteral value: Self.IntegerLiteralType) {
+        self = Fraction(num: value, den: 1)
+    }
+}
+
+extension Fraction: ExpressibleByFloatLiteral {
+    /// Any `Double` can be represented as a `Fraction`
+    public typealias FloatLiteralType = Double
+
+    public init(floatLiteral value: Double) {
+        self.init(double: value)
+    }
+}
+
 extension Fraction: Equatable {
     /// Returns a Boolean value indicating whether two `Fraction`s are equal.
     /// Reduces both values to its lowest common devisor before comparing,
