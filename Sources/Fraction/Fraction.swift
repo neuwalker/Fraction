@@ -429,6 +429,7 @@ extension Fraction: Strideable {
 }
 
 extension Fraction: Codable { }
+extension Fraction: Hashable { }
 
 // MARK: - Description
 extension Fraction: CustomStringConvertible, CustomDebugStringConvertible {
