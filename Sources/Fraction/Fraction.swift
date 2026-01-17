@@ -110,13 +110,10 @@ extension Fraction {
 }
 
 // MARK: - Calculations
-extension Fraction: AdditiveArithmetic, SignedNumeric {
+extension Fraction: AdditiveArithmetic, Numeric {
     
     /// The result of calculating the absolut value of a `Fraction` is itself a `Fraction`.
     public typealias Magnitude = Fraction
-    
-    /// Any integer can be represented as a `Fraction` by diving through 1.
-    public typealias IntegerLiteralType = Int
 
     /// Representing a `Fraction` with numerator of 0. Neutral element of addition.
     public static var zero: Fraction { Fraction(num: 0, den: 1) }
@@ -135,13 +132,7 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         
         return Fraction(num: reciprocalNumerator, den: self._numerator.magnitude)
     }
-    
-    /// Creates a new `Fraction` from an integer literal (by dividing through 1).
-    /// - Parameter value: An integer literal (like any whole number written).
-    public init(integerLiteral value: Self.IntegerLiteralType) {
-        self = Fraction(num: value, den: 1)
-    }
-    
+
     /// Creates a new `Fraction` from any `BinaryInteger` type, by dividing the value through 1.
     /// - Parameter source: Any value of `BinaryInteger` type.
     public init?<T>(exactly source: T) where T : BinaryInteger {
@@ -274,18 +265,6 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
         lhs = lhs / rhs
     }
     
-    /// Replaces this value with its additive inverse.
-    public mutating func negate() {
-        self = .zero - self
-    }
-
-    /// Negates a `Fraction`.
-    public func negated() -> Fraction {
-        var negating = self
-        negating.negate()
-        return negating
-    }
-
     /// Multiply a `Fraction` with a whole number.
     /// - Parameter number: An integer to multiply the fraction with.
     /// - Returns: A new fraction which is the `number` times of the given fraction.
@@ -312,6 +291,20 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
 
         let newFraction = self * Fraction(num: Int(temp), den: UInt(potentionOf10))
         return newFraction.reduced()
+    }
+}
+
+extension Fraction: SignedNumeric {
+    /// Replaces this value with its additive inverse.
+    public mutating func negate() {
+        self = .zero - self
+    }
+
+    /// Negates a `Fraction`.
+    public func negated() -> Fraction {
+        var negating = self
+        negating.negate()
+        return negating
     }
 }
 
