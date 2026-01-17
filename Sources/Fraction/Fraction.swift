@@ -332,9 +332,14 @@ extension Fraction: Equatable {
     ///   - rhs: Another `Fraction` to compare.
     /// - Returns: Boolean indicating both fractions are equal.
     public static func == (lhs: Fraction, rhs: Fraction) -> Bool {
-        let first = lhs.reduced()
-        let second = rhs.reduced()
-        return first._numerator == second._numerator && first._denominator == second._denominator
+
+        // Both fraction are equal, if they have a common denominator and the numerators are equal
+        let greatestCommonDivisor = Fraction.greatestCommonDivisor(a: Int(lhs._denominator), b: Int(rhs._denominator))
+
+        let first = lhs.numerator * (rhs._denominator / greatestCommonDivisor)
+        let second = rhs.numerator * (lhs._denominator / greatestCommonDivisor)
+        
+        return first == second
     }
 
     /// Two `Fraction`s are identically, if both their numerator and denominators are equal.
