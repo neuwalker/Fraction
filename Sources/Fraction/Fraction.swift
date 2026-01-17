@@ -7,6 +7,19 @@
 
 import Foundation
 
+// Precedence of exponent operator
+precedencegroup ExponentPrecedence {
+    associativity: left
+    higherThan: MultiplicationPrecedence
+    lowerThan: BitwiseShiftPrecedence
+    assignment: false
+}
+
+
+// Declaration of exponent operators
+infix operator **: ExponentPrecedence
+infix operator **=: AssignmentPrecedence
+
 ///
 /// Fraction
 ///
@@ -253,7 +266,12 @@ extension Fraction: AdditiveArithmetic, Numeric {
     public static func /= (lhs: inout Fraction, rhs: Fraction) {
         lhs = lhs / rhs
     }
-    
+
+    public static func ** (base: Fraction, exponent: Float) -> Fraction {
+        return Fraction(num: Int(pow(Double(base.numerator), Double(exponent))),
+                        den: UInt(pow(Double(base.denominator), Double(exponent))))
+    }
+
     /// Multiply a `Fraction` with a whole number.
     /// - Parameter number: An integer to multiply the fraction with.
     /// - Returns: A new fraction which is the `number` times of the given fraction.
