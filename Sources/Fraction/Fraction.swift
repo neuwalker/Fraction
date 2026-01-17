@@ -309,8 +309,9 @@ extension Fraction: AdditiveArithmetic, SignedNumeric {
             potentialNumerator = double * potentionOf10
             temp = potentialNumerator.rounded(.down)
         }
-        
-        return self * Fraction(num: Int(temp), den: UInt(potentionOf10))
+
+        let newFraction = self * Fraction(num: Int(temp), den: UInt(potentionOf10))
+        return newFraction.reduced()
     }
 }
 
