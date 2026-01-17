@@ -142,9 +142,11 @@ extension Fraction: AdditiveArithmetic, Numeric {
     
     /// Finds the lowest common denominator.
     public mutating func reduce() {
-        let greatedCommonDivisor = Fraction.greatestCommonDivisor(a: _numerator, b: Int(_denominator))
+        let sign = convertToDouble() < 0 ? -1 : 1
+        let greatedCommonDivisor = Fraction.greatestCommonDivisor(a: abs(_numerator), b: Int(_denominator))
 
-        _numerator /= greatedCommonDivisor
+        let numerator = abs(_numerator) / greatedCommonDivisor
+        _numerator = sign * numerator
         _denominator /= greatedCommonDivisor
     }
     
@@ -157,15 +159,13 @@ extension Fraction: AdditiveArithmetic, Numeric {
     }
 
 
-    private static func greatestCommonDivisor(a: Int, b: Int) -> Int {
+    fileprivate static func greatestCommonDivisor(a: Int, b: Int) -> Int {
     // Return the positive number if one of a and b is zero
-        if a * b == 0 {
-            return a + b
-        }
-        else {
-            // Solve recursivly
-            return (greatestCommonDivisor(a: b, b: a % b))
-        }
+        guard a != 0 else { return b }
+        guard b != 0 else { return a }
+
+        // Solve recursivly
+        return (greatestCommonDivisor(a: b, b: a % b))
     }
 
     /// The summation of two `Fraction`s.
