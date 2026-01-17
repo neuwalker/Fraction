@@ -94,9 +94,8 @@ public struct Fraction {
         }
 
         let denominator = UInt(pow(10.0, Double(digitsAfterDecimal)))
-        let numerator = sign * (Int(fractionalPart) + abs(wholePart) * Int(denominator))
-        let newFraction = Fraction(num: numerator, den: denominator)
-        self = newFraction //.reduce()
+        let numerator = sign * (Int(abs(fractionalPart) * Double(denominator)) + abs(wholePart) * Int(denominator))
+        self = Fraction(num: numerator, den: denominator).reduced()
     }
 }
 
