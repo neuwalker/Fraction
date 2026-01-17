@@ -142,22 +142,10 @@ extension Fraction: AdditiveArithmetic, Numeric {
     
     /// Finds the lowest common denominator.
     public mutating func reduce() {
-        // In the end upper will store the devisor to reduce to lowest common denominator
-        var upper = _numerator.magnitude    // devisor will be the same for positiv and negative fractions
-        var lower = _denominator
-        var temp: UInt = 0    // Temporay storage to flip values between upper and lower
-        
-        // Find the devisor
-        while lower != 0 {
-            temp = upper % lower
-            upper = lower
-            lower = temp
-        }
-        
-        // Upper now stores the devisor.
-        // Deviding by it reduces the fraction to its lowest common denominator
-        _numerator /= Int(upper)
-        _denominator /= upper
+        let greatedCommonDivisor = Fraction.greatestCommonDivisor(a: _numerator, b: Int(_denominator))
+
+        _numerator /= greatedCommonDivisor
+        _denominator /= greatedCommonDivisor
     }
     
     /// Creates a `Fraction` reduced by the lowest common denominator.
@@ -168,14 +156,16 @@ extension Fraction: AdditiveArithmetic, Numeric {
         return reducing
     }
 
-    /// Calculates the greatest common divisor of two `Fraction`s.
-    /// GCD is product of both fraction's denominator.
-    /// - Parameters:
-    ///   - lhs: A `Fraction`.
-    ///   - rhs: Another `Fraction`.
-    /// - Returns: Greatest common divisor.
-    public mutating func greatestCommonDivisor(lhs: Fraction, rhs: Fraction) -> Int {
-        return Int(lhs._denominator * rhs._denominator)
+
+    private static func greatestCommonDivisor(a: Int, b: Int) -> Int {
+    // Return the positive number if one of a and b is zero
+        if a * b == 0 {
+            return a + b
+        }
+        else {
+            // Solve recursivly
+            return (greatestCommonDivisor(a: b, b: a % b))
+        }
     }
 
     /// The summation of two `Fraction`s.
