@@ -30,7 +30,7 @@ let package = Package(
         .plugin(
             name: "SwiftLintPlugin",
             capability: .buildTool(),
-            path: "Plugins/SwiftLintPlugin"
+            path: "Plugins/SwiftFormatPlugin"
         ),
     ]
 )
