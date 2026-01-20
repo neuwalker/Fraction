@@ -19,7 +19,7 @@ let package = Package(
             name: "Fraction",
             plugins: [
                 .plugin(
-                    name: "SwiftFormatPlugin"
+                    name: "SwiftLintPlugin"
                 )
             ]
         ),
@@ -28,9 +28,9 @@ let package = Package(
             dependencies: ["Fraction"]
         ),
         .plugin(
-            name: "SwiftFormatPlugin",
+            name: "SwiftLintPlugin",
             capability: .buildTool(),
-            path: "Plugins/SwiftFormatPlugin"
+            path: "Plugins/SwiftLintPlugin"
         ),
     ]
 )
