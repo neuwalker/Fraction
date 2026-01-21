@@ -5,7 +5,6 @@
 //  Created by Stefan Neumärker on 19.01.26.
 //
 
-
 import Foundation
 import PackagePlugin
 
@@ -20,7 +19,7 @@ struct SwiftLintPlugin: BuildToolPlugin {
             .appending(path: "Plugins/SwiftFormatPlugin/swift-format-lint-script.sh")
             .path
 
-        let configurationPath = context.package
+        let configuration = context.package
             .directoryURL
             .appending(path: ".swift-format")
             .path
@@ -29,6 +28,15 @@ struct SwiftLintPlugin: BuildToolPlugin {
             .directoryURL
             .path
 
+        let swiftSourceFiles = target
+            .sourceModule?
+            .sourceFiles
+            .filter { $0.type == .source && $0.url.pathExtension == "swift" }
+            .map { $0.url } ?? []
+
+        let timestampFile = context.pluginWorkDirectoryURL
+            .appending(path: "swiftformat.stamp")
+
         return [
             .buildCommand(
                 displayName: "Running SwiftFormatPlugin",
@@ -36,11 +44,12 @@ struct SwiftLintPlugin: BuildToolPlugin {
                 arguments: [
                     scriptPath,
                     packagePath,
-                    configurationPath,
+                    configuration,
+                    timestampFile.path,
                 ],
                 environment: [:],
-                inputFiles: [],
-                outputFiles: []
+                inputFiles: swiftSourceFiles,
+                outputFiles: [timestampFile]
             )
         ]
     }
