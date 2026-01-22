@@ -10,17 +10,27 @@ let package = Package(
         .library(
             name: "Fraction",
             targets: ["Fraction"]
-        ),
+        )
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Fraction"
+            name: "Fraction",
+            plugins: [
+                .plugin(
+                    name: "SwiftLintPlugin"
+                )
+            ]
         ),
         .testTarget(
             name: "FractionTests",
             dependencies: ["Fraction"]
+        ),
+        .plugin(
+            name: "SwiftLintPlugin",
+            capability: .buildTool(),
+            path: "Plugins/SwiftFormatPlugin"
         ),
     ]
 )

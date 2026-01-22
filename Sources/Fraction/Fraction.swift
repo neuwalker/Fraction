@@ -1,6 +1,6 @@
 //
 //  Fraction.swift
-//  
+//
 //
 //  Created by Stefan Neumärker on 08.03.20.
 //
@@ -17,8 +17,8 @@ precedencegroup ExponentPrecedence {
 
 
 // Declaration of exponent operators
-infix operator **: ExponentPrecedence
-infix operator **=: AssignmentPrecedence
+infix operator ** : ExponentPrecedence
+infix operator **= : AssignmentPrecedence
 
 ///
 /// Fraction
@@ -68,7 +68,7 @@ public struct Fraction {
 
         self.init(num: numerator, den: denominator)
     }
-    
+
     /// Creates a new `Fraction` object.
     /// - Parameters:
     ///   - numerator: The counting part of the fraction. Value above the diving line.
@@ -114,7 +114,7 @@ public struct Fraction {
 
 // MARK: - Operations
 extension Fraction {
-    
+
     /// approx to nearest floating point number (double precision).
     fileprivate func convertToDouble() -> Double {
         return Double(_numerator) / Double(_denominator)
@@ -123,7 +123,7 @@ extension Fraction {
 
 // MARK: - Calculations
 extension Fraction: AdditiveArithmetic, Numeric {
-    
+
     /// The result of calculating the absolut value of a `Fraction` is itself a `Fraction`.
     public typealias Magnitude = Fraction
 
@@ -132,36 +132,39 @@ extension Fraction: AdditiveArithmetic, Numeric {
 
     /// Representing a `Fraction` with numerator and denominator of 1. Neutral element of multiplication.
     public static var one: Fraction { Fraction(num: 1, den: 1) }
-    
+
     /// The absolut value of a `Fraction`.
     public var magnitude: Magnitude { Fraction(num: Int(numerator.magnitude), den: denominator) }
-    
+
     /// The reciprocal value of the given `Fraction`:
     /// `signum(numerator/denominator) -> signum(denominator/numerator)`.
     public var reciprocal: Fraction {
         var reciprocalNumerator = Int(self._denominator)
         reciprocalNumerator *= self._numerator < 0 ? -1 : 1
-        
+
         return Fraction(num: reciprocalNumerator, den: self._numerator.magnitude)
     }
 
     /// Creates a new `Fraction` from any `BinaryInteger` type, by dividing the value through 1.
     /// - Parameter source: Any value of `BinaryInteger` type.
-    public init?<T>(exactly source: T) where T : BinaryInteger {
+    public init?<T>(exactly source: T) where T: BinaryInteger {
         let numerator = Int(source)
         self = Fraction(num: numerator, den: 1)
     }
-    
+
     /// Finds the lowest common denominator.
     public mutating func reduce() {
         let sign = convertToDouble() < 0 ? -1 : 1
-        let greatedCommonDivisor = Fraction.greatestCommonDivisor(a: abs(_numerator), b: Int(_denominator))
+        let greatedCommonDivisor = Fraction.greatestCommonDivisor(
+            a: abs(_numerator),
+            b: Int(_denominator)
+        )
 
         let numerator = abs(_numerator) / greatedCommonDivisor
         _numerator = sign * numerator
         _denominator /= greatedCommonDivisor
     }
-    
+
     /// Creates a `Fraction` reduced by the lowest common denominator.
     /// - Returns: A new `Fraction` reduced by the lowest common denominator.
     public func reduced() -> Fraction {
@@ -172,7 +175,7 @@ extension Fraction: AdditiveArithmetic, Numeric {
 
 
     fileprivate static func greatestCommonDivisor(a: Int, b: Int) -> Int {
-    // Return the positive number if one of a and b is zero
+        // Return the positive number if one of a and b is zero
         guard a != 0 else { return b }
         guard b != 0 else { return a }
 
@@ -189,11 +192,14 @@ extension Fraction: AdditiveArithmetic, Numeric {
     /// - Returns: A fraction representing the sum.
     public static func + (lhs: Fraction, rhs: Fraction) -> Fraction {
 
-        let result = Fraction(num: (lhs._numerator * Int(rhs._denominator)) + (Int(lhs._denominator) * rhs._numerator), den: lhs._denominator * rhs._denominator)
-        
+        let result = Fraction(
+            num: (lhs._numerator * Int(rhs._denominator)) + (Int(lhs._denominator) * rhs._numerator),
+            den: lhs._denominator * rhs._denominator
+        )
+
         return result.reduced()
     }
-    
+
     /// The difference of one `Fraction` from another.
     /// To substiute a fraction from another:
     /// `a/b - c/d = ((a*d) - (b*c)) / (b*d)`
@@ -203,11 +209,14 @@ extension Fraction: AdditiveArithmetic, Numeric {
     /// - Returns: The fraction representing the difference.
     public static func - (lhs: Fraction, rhs: Fraction) -> Fraction {
 
-        let result = Fraction(num: (lhs._numerator * Int(rhs._denominator)) - (Int(lhs._denominator) * rhs._numerator), den: lhs._denominator * rhs._denominator)
-        
+        let result = Fraction(
+            num: (lhs._numerator * Int(rhs._denominator)) - (Int(lhs._denominator) * rhs._numerator),
+            den: lhs._denominator * rhs._denominator
+        )
+
         return result.reduced()
     }
-    
+
     /// The product of two `Fraction`s.
     /// To multiply two fraction:
     /// `a/b * c/d = (a*c) / (b/d)`
@@ -217,11 +226,14 @@ extension Fraction: AdditiveArithmetic, Numeric {
     /// - Returns: A fraction representing the product.
     public static func * (lhs: Fraction, rhs: Fraction) -> Fraction {
 
-        let result = Fraction(num: lhs._numerator * rhs._numerator, den: lhs._denominator * rhs._denominator)
-        
+        let result = Fraction(
+            num: lhs._numerator * rhs._numerator,
+            den: lhs._denominator * rhs._denominator
+        )
+
         return result.reduced()
     }
-    
+
     /// The quotient of one `Fraction` to another.
     /// To devide a Fraction by another:
     /// `a/b / c/d = (a*d) / (b*c)`
@@ -230,11 +242,14 @@ extension Fraction: AdditiveArithmetic, Numeric {
     ///   - rhs: Devisor fraction.
     public static func / (lhs: Fraction, rhs: Fraction) -> Fraction {
 
-        let result = Fraction(num: lhs._numerator * Int(rhs._denominator), den: UInt(lhs._denominator * rhs._numerator))
+        let result = Fraction(
+            num: lhs._numerator * Int(rhs._denominator),
+            den: UInt(lhs._denominator * rhs._numerator)
+        )
 
         return result.reduced()
     }
-    
+
     /// Adds two `Fraction`s and stores the result in the left-hand-side fraction.
     /// - Parameters:
     ///   - lhs: A fraction summand.
@@ -242,7 +257,7 @@ extension Fraction: AdditiveArithmetic, Numeric {
     public static func += (lhs: inout Fraction, rhs: Fraction) {
         lhs = lhs + rhs
     }
-    
+
     /// Subtracts the second `Fraction` from the first and stores the difference in the left-hand-side variable.
     /// - Parameters:
     ///   - lhs: Minuend fraction.
@@ -250,7 +265,7 @@ extension Fraction: AdditiveArithmetic, Numeric {
     public static func -= (lhs: inout Fraction, rhs: Fraction) {
         lhs = lhs - rhs
     }
-    
+
     /// Multiplies two `Fraction`s and stores the product in the left-hand-side variable.
     /// - Parameters:
     ///   - lhs: A fraction factor.
@@ -258,7 +273,7 @@ extension Fraction: AdditiveArithmetic, Numeric {
     public static func *= (lhs: inout Fraction, rhs: Fraction) {
         lhs = lhs * rhs
     }
-    
+
     /// Divides one `Fraction` through another and stores the quotient in the left-hand-side variable.
     /// - Parameters:
     ///   - lhs: Dividend fraction.
@@ -273,8 +288,10 @@ extension Fraction: AdditiveArithmetic, Numeric {
     ///   - exponent: Any value used as the exponent.
     /// - Returns: A new fraction, which is exponent times bigger.
     public static func ** (base: Fraction, exponent: Float) -> Fraction {
-        return Fraction(num: Int(pow(Double(base.numerator), Double(exponent))),
-                        den: UInt(pow(Double(base.denominator), Double(exponent))))
+        return Fraction(
+            num: Int(pow(Double(base.numerator), Double(exponent))),
+            den: UInt(pow(Double(base.denominator), Double(exponent)))
+        )
     }
 
     /// Rise a `Fraction` to it's exponents power
@@ -293,7 +310,7 @@ extension Fraction: AdditiveArithmetic, Numeric {
         multipliedFraction.reduce()
         return multipliedFraction
     }
-    
+
     /// Multiply a `Fraction` with a floating point number.
     /// - Parameter double: The floating point number to multiply the fraction with.
     /// - Returns: A new fraction which is the producht of `double` with the givern fraction.
@@ -301,10 +318,10 @@ extension Fraction: AdditiveArithmetic, Numeric {
         var potentionOf10: Double = 1
         var potentialNumerator: Double = 1
         var temp: Double = 0
-        
+
         while potentialNumerator - temp > 0 {
             potentionOf10 *= 10
-            
+
             potentialNumerator = double * potentionOf10
             temp = potentialNumerator.rounded(.down)
         }
@@ -364,11 +381,14 @@ extension Fraction: Equatable {
     public static func == (lhs: Fraction, rhs: Fraction) -> Bool {
 
         // Both fraction are equal, if they have a common denominator and the numerators are equal
-        let greatestCommonDivisor = Fraction.greatestCommonDivisor(a: Int(lhs._denominator), b: Int(rhs._denominator))
+        let greatestCommonDivisor = Fraction.greatestCommonDivisor(
+            a: Int(lhs._denominator),
+            b: Int(rhs._denominator)
+        )
 
         let first = lhs.numerator * (rhs._denominator / greatestCommonDivisor)
         let second = rhs.numerator * (lhs._denominator / greatestCommonDivisor)
-        
+
         return first == second
     }
 
@@ -380,7 +400,7 @@ extension Fraction: Equatable {
     public static func === (lhs: Fraction, rhs: Fraction) -> Bool {
         return lhs._numerator == rhs._numerator && lhs._denominator == rhs._denominator
     }
-    
+
     /// Two `Fractions` are not identically, if either their numerators or denominators are unequal.
     /// - Parameters:
     ///   - lhs: A `Fraction` to compare.
@@ -412,7 +432,7 @@ extension Fraction: Comparable {
 
         let ownNumerator = lhs._numerator * rhs._denominator
         let foreignNumerator = rhs._numerator * lhs._denominator
-        
+
         return ownNumerator < foreignNumerator
     }
 }
@@ -467,8 +487,8 @@ extension Fraction: Strideable {
     }
 }
 
-extension Fraction: Codable { }
-extension Fraction: Hashable { }
+extension Fraction: Codable {}
+extension Fraction: Hashable {}
 
 // MARK: - Description
 extension Fraction: CustomStringConvertible, CustomDebugStringConvertible {
@@ -476,7 +496,7 @@ extension Fraction: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
         "Fraction \(_numerator)/\(_denominator) – approx: \(convertToDouble())"
     }
-    
+
     /// A textual representation of this instance, suitable for debugging.
     public var debugDescription: String {
         "Fraction \(_numerator)/\(_denominator) – approx: \(convertToDouble())"
