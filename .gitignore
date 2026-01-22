@@ -37,7 +37,7 @@ playground.xcworkspace
 .swiftpm/configuration/registries.json
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 
-
+build/
 .build/
 
 # fastlane
